@@ -48,6 +48,10 @@ import LinearAlgebra: norm, mul!
 
 using GenericLinearAlgebra
 
+using SIMD
+using SIMD: Vec, vifelse, vgather, vscatter
+using SIMD.Intrinsics: extractelement
+
 import Quadmath
 
 import Base: hash, promote_type, promote_rule, convert,
