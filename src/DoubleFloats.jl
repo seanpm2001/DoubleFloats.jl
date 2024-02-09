@@ -81,7 +81,10 @@ import Base.Math: modf, fma, muladd,
 
 import Quadmath: Float128
 
-include("Double.jl")   # Double64, Double32, Double16
+# include("Double.jl")   # Double64, Double32, Double16
+include("Double64.jl")
+include("Double32.jl")
+
 
 include("math/errorfree.jl")
 include("math/leasterror.jl")
