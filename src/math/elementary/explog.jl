@@ -21,7 +21,7 @@ function exp(a::DoubleFloat{T}) where {T<:IEEEFloat}
     return calc_exp(a)
 end
 
-function exp_taylor(a::DoubleFloat{T}) where {T<:IEEEFloat}
+function exp_taylor(a::Double64)
     x = a
     x2 = x*x
     x3 = x*x2
@@ -43,9 +43,33 @@ function exp_taylor(a::DoubleFloat{T}) where {T<:IEEEFloat}
          x3*inv_fact[23] + x4*inv_fact[24])
     z6 = x25 * (inv_fact[25] + x*inv_fact[26] + x2*inv_fact[27])
 
-    ((((z6+z5)+z4)+z3)+z2)+z + one(DoubleFloat{T})
+    ((((z6+z5)+z4)+z3)+z2)+z + one(Double64)
 end
 
+function exp_taylor(a::Double32)
+    x = a
+    x2 = x*x
+    x3 = x*x2
+    x4 = x2*x2
+    x5 = x2*x3
+    x10 = x5*x5
+    x15 = x5*x10
+    x20 = x10*x10
+    x25 = x10*x15
+
+    z = x + inv_fact32[2]*x2 + inv_fact32[3]*x3 + inv_fact32[4]*x4
+    z2 = x5 * (inv_fact32[5] + x*inv_fact32[6] + x2*inv_fact32[7] +
+         x3*inv_fact32[8] + x4*inv_fact32[9])
+    z3 = x10 * (inv_fact32[10] + x*inv_fact32[11] + x2*inv_fact32[12] +
+         x3*inv_fact32[13] + x4*inv_fact32[14])
+    z4 = x15 * (inv_fact32[15] + x*inv_fact32[16] + x2*inv_fact32[17] +
+         x3*inv_fact32[18] + x4*inv_fact32[19])
+    z5 = x20 * (inv_fact32[20] + x*inv_fact32[21] + x2*inv_fact32[22] +
+         x3*inv_fact[23] + x4*inv_fact32[24])
+    z6 = x25 * (inv_fact32[25] + x*inv_fact32[26] + x2*inv_fact32[27])
+
+    ((((z6+z5)+z4)+z3)+z2)+z + one(Double32)
+end
 
 @inline exp_zero_half(a::DoubleFloat{T}) where {T<:IEEEFloat} = exp_taylor(a)
 
