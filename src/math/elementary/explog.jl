@@ -129,7 +129,11 @@ end
 
 function Base.:(^)(r::Int, n::DoubleFloat{T}) where {T<:IEEEFloat}
     if isinteger(n)
-        return r^Int64(Float64(n)) # convert n to Float64 first
+        if !signbit(n)
+            return r^Int64(Float64(n)) # convert n to Float64 first
+        else
+            return Float64(r)^Int64(Float64(n)))
+        end
     else
         return exp(n * log(r))
     end
